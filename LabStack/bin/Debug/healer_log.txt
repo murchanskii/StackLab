@@ -1,0 +1,4 @@
+(Healer[0]) from (Army Sun) gets [24] damage
+(Healer[0]) from (Army Sun) gets [23] damage
+(Healer[0]) from (Army Sun) gets [22] damage
+(Healer[0]) from (Army Sun) is dead

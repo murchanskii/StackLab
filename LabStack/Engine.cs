@@ -38,12 +38,13 @@ namespace LabStack
 
         public void CreateArmy()
         {
+            _isDraw = false;
             _undoCommands = new Stack<ICommand>();
             _army1 = new Army("Army Sun", 200);
             Thread.Sleep(1000);
             _army2 = new Army("Army Moon", 200);
             InitializeFile(@"deaths.txt");
-            InitializeFile(@"heavy_log.txt");
+            InitializeFile(@"healer_log.txt");
             SetStratedy(0); // default strategy OneColumn()
 
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -92,6 +93,9 @@ namespace LabStack
             }
         }
 
+        private bool _isDraw;
+        private bool _winnerExists;
+
         public void DoTurnUntilEnd()
         {
             if (_army1 == null || _army2 == null)
@@ -104,16 +108,61 @@ namespace LabStack
             while (_army1.soldiers.Count != 0 && _army2.soldiers.Count != 0)
             {
                 Turn();
+                if (_isDraw || _winnerExists)
+                    break;
                 ShowArmies();
                 Console.WriteLine("|===========================================" +
                                   "================================================|");
             }
+
+        }
+
+        private void Draw()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("It's a DRAW");
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
+        private void CheckForWinner()
+        {
+            if (_army1.soldiers.Count == 0)
+            {
+                WinnerMessage(_army2);
+                _winnerExists = true;
+            }
+            if (_army2.soldiers.Count == 0)
+            {
+                WinnerMessage(_army1);
+                _winnerExists = true;
+            }
+        }
+
+        private void WinnerMessage(Army winner)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"({winner.Name}) is WINNER");
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public void Turn()
         {
             _redoCommands = new Stack<ICommand>();
             _currentStrategy.Turn();
+
+            int turnsWithoutDeath = 15;
+            if (_undoCommands.Count >= turnsWithoutDeath)
+            {
+                if (!_undoCommands.ToList()
+                    .GetRange(_undoCommands.Count - turnsWithoutDeath, turnsWithoutDeath)
+                    .Select(command => command is DeathCommand)
+                    .Any())
+                {
+                    _isDraw = true;
+                    Draw();
+                }
+            }
+            CheckForWinner();
         }
 
         public void Undo()

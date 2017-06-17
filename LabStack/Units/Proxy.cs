@@ -21,7 +21,7 @@ namespace LabStack.Units
         public override int MaxHP => _healer.MaxHP;
 
         private Healer _healer;
-        private static string _logFile = @"archer_log.txt";
+        private static string _logFile = @"healer_log.txt";
         private StreamWriter sw;
 
         public Proxy(Healer h)

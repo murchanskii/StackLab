@@ -1,3 +1,7 @@
-(ProtectingWall[0]) from (Army Moon) is dead
-(Archer[0]) from (Army Sun) is dead
-(LightInfantry[1]) from (Army Moon) is dead
+(Proxy[0]) from (Army Sun) is dead
+(Archer[1]) from (Army Sun) is dead
+(LightInfantry[0]) from (Army Moon) is dead
+(LightInfantry[2]) from (Army Sun) is dead
+(Magician[1]) from (Army Moon) is dead
+(HeavyInfantry[3]) from (Army Sun) is dead
+(Archer[4]) from (Army Sun) is dead
