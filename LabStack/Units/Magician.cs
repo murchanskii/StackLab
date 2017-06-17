@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LabStack.ArmyFolder;
 
 namespace LabStack.Units
 {
@@ -20,14 +21,14 @@ namespace LabStack.Units
             ArmyName = armyName;
         }
 
-        public void Clone(List<Unit> army, IClonable unit, bool isUndo)
+        public void Clone(Army army, IClonable unit, bool isUndo)
         {
             if (isUndo)
             {
-                army.RemoveAt(army.Count - 1);
+                army.soldiers.RemoveAt(army.soldiers.Count - 1);
                 return;
             }
-            army.Add(unit.Clone() as Unit);
+            army.soldiers.Add(unit.Clone() as Unit);
         }
     }
 }

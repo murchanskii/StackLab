@@ -11,19 +11,19 @@ namespace LabStack.Commands
 {
     class DeathCommand : ICommand
     {
-        private List<Unit> _units;
+        private Army _army;
         private int _index;
         private List<Unit> _tempSoldiers;
-        public DeathCommand(List<Unit> units, int index)
+        public DeathCommand(Army army, int index)
         {
-            _units = units;
+            _army = army;
             _index = index;
         }
 
         public void Undo()
         {
-            _units = _tempSoldiers;
-            Console.WriteLine($"({_units[_index].GetType().Name}[{_index}] from ({_units[_index].ArmyName}) " +
+            _army.soldiers = _tempSoldiers;
+            Console.WriteLine($"({_army.soldiers[_index].GetType().Name}[{_index}] from ({_army.soldiers[_index].ArmyName}) " +
                               $"became alive)");
             string[] lines = File.ReadAllLines(@"deaths.txt");
             File.WriteAllLines(@"deaths.txt", lines.Take(lines.Count() - 1));
@@ -31,9 +31,9 @@ namespace LabStack.Commands
 
         public void Do()
         {
-            _units[_index].ReportDeadUnit();
-            _tempSoldiers = _units.ToList();
-            _units.RemoveAt(_index);
+            _army.soldiers[_index].ReportDeadUnit();
+            _tempSoldiers = _army.soldiers.ToList();
+            _army.soldiers.RemoveAt(_index);
         }
     }
 }

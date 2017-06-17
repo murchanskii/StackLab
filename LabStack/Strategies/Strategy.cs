@@ -43,34 +43,34 @@ namespace LabStack.Strategies
             return range;
         }
 
-        protected void Heal(Healer healer, int index, List<Unit> units)
+        protected void Heal(Healer healer, int index, Army army)
         {
             int force = CalcValue(healer.RangedAbility);
             int range = HomeTerritory(healer, index);
-            if (range < 0 || range >= units.Count)
+            if (range < 0 || range >= army.soldiers.Count)
                 CommandHandler(new NoActionCommand(healer.GetType().Name, index, healer.ArmyName));
             else
-                CommandHandler(new HealCommand(healer, units[range], force, healer.ArmyName));
+                CommandHandler(new HealCommand(healer, army.soldiers[range], force, healer.ArmyName));
         }
 
-        protected void Clone(Magician magician, int index, List<Unit> units)
+        protected void Clone(Magician magician, int index, Army army)
         {
             int range = HomeTerritory(magician, index);
             IClonable unitToClone;
-            if (range < 0 || range >= units.Count || (unitToClone = units[range] as IClonable) == null)
+            if (range < 0 || range >= army.soldiers.Count || (unitToClone = army.soldiers[range] as IClonable) == null)
                 CommandHandler(new NoActionCommand(magician.GetType().Name, index, magician.ArmyName));
             else
-                CommandHandler(new CloneCommand(magician, units, unitToClone));
+                CommandHandler(new CloneCommand(magician, army, unitToClone));
         }
 
-        protected void Dress(LightInfantry unit, int index, List<Unit> units)
+        protected void Dress(LightInfantry unit, int index, Army army)
         {
             int range = index + Rnd.Next(-1, 2);
-            if (range >= 0 && range < units.Count)
-                if (units[range].CanBeDressed)
+            if (range >= 0 && range < army.soldiers.Count)
+                if (army.soldiers[range].CanBeDressed)
                 {
                     int chance = Rnd.Next(4);
-                    var dressableUnit = units[range];
+                    var dressableUnit = army.soldiers[range];
                     Unit armor = new Helmet(dressableUnit);
                     switch (chance)
                     {
@@ -86,23 +86,23 @@ namespace LabStack.Strategies
                     }
                     var armorA = (Armor)armor;
                     if (!armorA.armors.GetRange(0, armorA.armors.Count - 1).Contains(armor.GetType().Name))
-                        CommandHandler(new GetDressedCommand(unit, units, range, armor));
+                        CommandHandler(new GetDressedCommand(unit, army, range, armor));
                     else
                         CommandHandler(new NoActionCommand(unit.GetType().Name, index, unit.ArmyName));
                 }
         }
 
-        protected void RangeAttack(RangedUnit archer, int index, List<Unit> units) // ТУТ!!!!!!!!!!!!
+        protected void RangeAttack(RangedUnit archer, int index, Army army)
         {
             int damage = CalcValue(archer.RangedAbility);
             int range = EnemyTerritory(archer, index);
-            if (range < 0 || range >= units.Count)
+            if (range < 0 || range >= army.soldiers.Count)
                 CommandHandler(new NoActionCommand(archer.GetType().Name, index, archer.ArmyName));
             else
             {
-                CommandHandler(new ChangeHPCommand(units[range], damage, archer, archer.ArmyName, units));
-                if (units[range].HP <= 0)
-                    CommandHandler(new DeathCommand(units, range));
+                CommandHandler(new ChangeHPCommand(army.soldiers[range], damage, archer, archer.ArmyName, army));
+                if (army.soldiers[range].HP <= 0)
+                    CommandHandler(new DeathCommand(army, range));
             }
         }
 

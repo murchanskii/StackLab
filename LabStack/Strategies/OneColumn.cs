@@ -30,9 +30,9 @@ namespace LabStack.Strategies
             var another = second.soldiers.First();
 
             int damage = CalcValue(one.ATK);
-            CommandHandler(new ChangeHPCommand(another, damage, one, one.ArmyName, second.soldiers));
+            CommandHandler(new ChangeHPCommand(another, damage, one, one.ArmyName, second));
             if (another.HP <= 0)
-                CommandHandler(new DeathCommand(second.soldiers, 0));
+                CommandHandler(new DeathCommand(second, 0));
         }
 
         protected override void RangedUnitFight(Army first, Army second)
@@ -46,15 +46,15 @@ namespace LabStack.Strategies
                 {
                     case 0:
                         if (unit is RangedUnit)
-                            RangeAttack(unit as RangedUnit, i, second.soldiers);
+                            RangeAttack(unit as RangedUnit, i, second);
                         break;
                     case 1:
                         if (unit is Magician)
-                            Clone(unit as Magician, i, first.soldiers);
+                            Clone(unit as Magician, i, first);
                         else if (unit is Healer)
-                            Heal(unit as Healer, i, first.soldiers);
+                            Heal(unit as Healer, i, first);
                         else if (unit.CanDress)
-                            Dress(unit as LightInfantry, i, first.soldiers);
+                            Dress(unit as LightInfantry, i, first);
                         break;
                 }
             }

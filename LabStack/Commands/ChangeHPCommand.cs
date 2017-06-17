@@ -14,20 +14,20 @@ namespace LabStack.Commands
         private readonly Unit _unit;
         private int _value;
         private readonly string _armyName;
-        private List<Unit> _enemyUnits;
+        private Army _enemyArmy;
         
         private List<string> _lostArmorList;
         private Armor _prevEnemyUnit;
         private int _index;
         
 
-        public ChangeHPCommand(Unit enemyUnit, int value, Unit unit, string armyName, List<Unit> enemyUnits)
+        public ChangeHPCommand(Unit enemyUnit, int value, Unit unit, string armyName, Army army)
         {
             _enemyUnit = enemyUnit;
             _value = value;
             _unit = unit;
             _armyName = armyName;
-            _enemyUnits = enemyUnits;
+            _enemyArmy = army;
         }
 
         public void Undo()
@@ -38,8 +38,8 @@ namespace LabStack.Commands
             if (_lostArmorList != null)
             {
                 Console.WriteLine(" and his " + string.Join(",", _lostArmorList));
-                _enemyUnits.RemoveAt(_index);
-                _enemyUnits.Insert(_index, _prevEnemyUnit);
+                _enemyArmy.soldiers.RemoveAt(_index);
+                _enemyArmy.soldiers.Insert(_index, _prevEnemyUnit);
             }
             else
                 Console.WriteLine("\n");
@@ -61,11 +61,11 @@ namespace LabStack.Commands
                                       $" loses his |{armoredUnit.armors.Last()}|");
                     _lostArmorList.Add(armoredUnit.armors.Last());
                     _value -= armoredUnit.DEFbuff;
-                    _index = _enemyUnits.IndexOf(armoredUnit);
-                    _enemyUnits.RemoveAt(_index);
+                    _index = _enemyArmy.soldiers.IndexOf(armoredUnit);
+                    _enemyArmy.soldiers.RemoveAt(_index);
                     _enemyUnit = armoredUnit.Undress();
                     armoredUnit = _enemyUnit as Armor;
-                    _enemyUnits.Insert(_index, _enemyUnit);
+                    _enemyArmy.soldiers.Insert(_index, _enemyUnit);
                 }
             }
             _enemyUnit.TakeDamage(_value);

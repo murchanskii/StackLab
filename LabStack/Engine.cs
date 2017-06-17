@@ -66,6 +66,9 @@ namespace LabStack
                 case 1:
                     strategy = new NColumns(_army1, _army2, _undoCommands, _rnd);
                     break;
+                case 2:
+                    strategy = new AllVsAll(_army1, _army2, _undoCommands, _rnd);
+                    break;
             }
             _currentStrategy = strategy;
             Console.WriteLine("|===============================================" +
