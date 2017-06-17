@@ -12,3 +12,10 @@ C:\Users\Факет\Documents\Visual Studio 2017\Projects\Stackk\LabStack\bin\De
 C:\Users\Факет\Documents\Visual Studio 2017\Projects\Stackk\LabStack\bin\Debug\LabStack.exe
 C:\Users\Факет\Documents\Visual Studio 2017\Projects\Stackk\LabStack\bin\Debug\LabStack.pdb
 C:\Users\Факет\Documents\Visual Studio 2017\Projects\Stackk\LabStack\bin\Debug\GulyayGorod.dll
+C:\Users\Факет\Documents\Visual Studio 2017\Projects\stacklab\LabStack\bin\Debug\LabStack.exe.config
+C:\Users\Факет\Documents\Visual Studio 2017\Projects\stacklab\LabStack\bin\Debug\LabStack.exe
+C:\Users\Факет\Documents\Visual Studio 2017\Projects\stacklab\LabStack\bin\Debug\LabStack.pdb
+C:\Users\Факет\Documents\Visual Studio 2017\Projects\stacklab\LabStack\bin\Debug\GulyayGorod.dll
+C:\Users\Факет\Documents\Visual Studio 2017\Projects\stacklab\LabStack\obj\Debug\LabStack.csprojResolveAssemblyReference.cache
+C:\Users\Факет\Documents\Visual Studio 2017\Projects\stacklab\LabStack\obj\Debug\LabStack.exe
+C:\Users\Факет\Documents\Visual Studio 2017\Projects\stacklab\LabStack\obj\Debug\LabStack.pdb

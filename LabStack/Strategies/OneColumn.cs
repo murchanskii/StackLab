@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using LabStack.ArmyFolder;
 using LabStack.Commands;
 using LabStack.Units;
-using LabStack.Units.Armors;
 
 namespace LabStack.Strategies
 {
@@ -17,16 +14,9 @@ namespace LabStack.Strategies
             base (army1, army2, undoCommands, rnd)
         { }
 
-        protected override int EnemyTerritory(RangedUnit unit, int index)
+        public override void ShowArmy(Army army)
         {
-            int range = unit.Range + Rnd.Next(-2, 3) - index - 1;
-            return range;
-        }
-
-        protected override int HomeTerritory(RangedUnit unit, int index)
-        {
-            int range = unit.Range + Rnd.Next(-2, 3) + index - 1;
-            return range;
+            Console.WriteLine(army.ToString());
         }
 
         protected override void FirstVsFirst(Army first, Army second)
@@ -40,9 +30,9 @@ namespace LabStack.Strategies
             var another = second.soldiers.First();
 
             int damage = CalcValue(one.ATK);
-            CommandHandler(new ChangeHPCommand(another, damage, one, one.ArmyName, second));
+            CommandHandler(new ChangeHPCommand(another, damage, one, one.ArmyName, second.soldiers));
             if (another.HP <= 0)
-                CommandHandler(new DeathCommand(second, 0));
+                CommandHandler(new DeathCommand(second.soldiers, 0));
         }
 
         protected override void RangedUnitFight(Army first, Army second)
@@ -56,15 +46,15 @@ namespace LabStack.Strategies
                 {
                     case 0:
                         if (unit is RangedUnit)
-                            RangeAttack(unit as RangedUnit, i, second);
+                            RangeAttack(unit as RangedUnit, i, second.soldiers);
                         break;
                     case 1:
                         if (unit is Magician)
-                            Clone(unit as Magician, i, first);
+                            Clone(unit as Magician, i, first.soldiers);
                         else if (unit is Healer)
-                            Heal(unit as Healer, i, first);
+                            Heal(unit as Healer, i, first.soldiers);
                         else if (unit.CanDress)
-                            Dress(unit as LightInfantry, i, first);
+                            Dress(unit as LightInfantry, i, first.soldiers);
                         break;
                 }
             }

@@ -11,28 +11,28 @@ namespace LabStack.Commands
     class CloneCommand : ICommand
     {
         private Magician _magician;
-        private Army _army;
+        private List<Unit> _units;
         private IClonable _unit;
-        public CloneCommand(Magician magician, Army army, IClonable unit)
+        public CloneCommand(Magician magician, List<Unit> units, IClonable unit)
         {
             _magician = magician;
-            _army = army;
+            _units = units;
             _unit = unit;
         }
 
         public void Undo()
         {
-            Console.WriteLine($"({_unit.GetType().Name}[{(_unit as Unit).ID}]) from ({_army.Name}) " +
-                                $"loses his clone at [{_army.soldiers.Count}]");
-            _magician.Clone(_army.soldiers, _unit, true);
+            Console.WriteLine($"({_unit.GetType().Name}[{(_unit as Unit).ID}]) from ({(_unit as Unit).ArmyName}) " +
+                                $"loses his clone at [{_units.Count}]");
+            _magician.Clone(_units, _unit, true);
         }
 
         public void Do()
         {
-            _magician.Clone(_army.soldiers, _unit, false);
-            Console.WriteLine($"({_magician.GetType().Name}[{_magician.ID}]) from ({_army.Name}) " +
-                              $"clones ({_unit.GetType().Name}[{(_unit as Unit).ID}]) from ({_army.Name}) " +
-                              $"to [{_army.soldiers.Count}]");
+            _magician.Clone(_units, _unit, false);
+            Console.WriteLine($"({_magician.GetType().Name}[{_magician.ID}]) from ({_magician.ArmyName}) " +
+                              $"clones ({_unit.GetType().Name}[{(_unit as Unit).ID}]) from ({(_unit as Unit).ArmyName}) " +
+                              $"to [{_units.Count}]");
         }
     }
 }

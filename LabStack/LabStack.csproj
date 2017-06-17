@@ -55,6 +55,8 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\NoActionCommand.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="Strategies\AllVsAll.cs" />
+    <Compile Include="Strategies\NColumns.cs" />
     <Compile Include="Strategies\Strategy.cs" />
     <Compile Include="Observers\Annalist.cs" />
     <Compile Include="Observers\Kill.cs" />

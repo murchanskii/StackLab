@@ -44,24 +44,43 @@ namespace LabStack
             _army2 = new Army("Army Moon", 200);
             InitializeFile(@"deaths.txt");
             InitializeFile(@"heavy_log.txt");
-            SetStratedy(new OneColumn(_army1, _army2, _undoCommands, _rnd)); // default strategy
+            SetStratedy(0); // default strategy OneColumn()
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Armies created");
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        public void SetStratedy(Strategy strategy)
+        public void SetStratedy(int numOfStrategy)
         {
+            if (_army1 == null || _army2 == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("CREATE ARMIES");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                return;
+            }
+            Strategy strategy = new OneColumn(_army1, _army2, _undoCommands, _rnd);
+            switch (numOfStrategy)
+            {
+                case 1:
+                    strategy = new NColumns(_army1, _army2, _undoCommands, _rnd);
+                    break;
+            }
             _currentStrategy = strategy;
+            Console.WriteLine("|===============================================" +
+                              "============================================|\n");
+            ShowArmies();
+            Console.WriteLine("|===============================================" +
+                              "============================================|");
         }
 
         public void ShowArmies()
         {
             if (_army1 != null)
-                Console.WriteLine(_army1.ToString());
+                _currentStrategy.ShowArmy(_army1);
             if (_army2 != null)
-                Console.WriteLine(_army2.ToString());
+                _currentStrategy.ShowArmy(_army2);
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -83,7 +102,8 @@ namespace LabStack
             {
                 Turn();
                 ShowArmies();
-                Console.WriteLine("|===========================================================================================|");
+                Console.WriteLine("|===========================================" +
+                                  "================================================|");
             }
         }
 

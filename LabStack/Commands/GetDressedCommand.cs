@@ -14,32 +14,32 @@ namespace LabStack.Commands
     {
         private LightInfantry _light;
         private int _index;
-        private Army _army;
+        private List<Unit> _units;
         private Unit _armor;
-        public GetDressedCommand(LightInfantry l, Army armyToDress, int indexOfHeavy, Unit armor)
+        public GetDressedCommand(LightInfantry l, List<Unit> unitsToDress, int indexOfHeavy, Unit armor)
         {
             _light = l;
             _index = indexOfHeavy;
-            _army = armyToDress;
+            _units = unitsToDress;
             _armor = armor;
         }
 
         public void Undo()
         {
-            _army.soldiers.RemoveAt(_index);
+            _units.RemoveAt(_index);
             Armor armor;
             if ((armor = _armor as Armor) != null)
-                _army.soldiers.Insert(_index, armor.Undress());
+                _units.Insert(_index, armor.Undress());
             Console.WriteLine($"({_light.GetType().Name}[{_light.ID}]) from ({_light.ArmyName})" +
                               $" took off |{_armor.GetType().Name}| from " +
-                              $"(HeavyInfantry[{_army.soldiers[_index].ID}])");
+                              $"(HeavyInfantry[{_units[_index].ID}])");
         }
 
         public void Do()
         {
-            _light.Dress(_army, _index, _armor);
+            _light.Dress(_units, _index, _armor);
             Console.WriteLine($"({_light.GetType().Name}[{_light.ID}]) from ({_light.ArmyName})" +
-                              $" dressed (HeavyInfantry[{_army.soldiers[_index].ID}]) with" +
+                              $" dressed (HeavyInfantry[{_units[_index].ID}]) with" +
                               $" |{_armor.GetType().Name}|");
         }
     }

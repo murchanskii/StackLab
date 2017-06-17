@@ -29,10 +29,10 @@ namespace LabStack.Units
             return $" ({GetType().Name}[{ID}]): HP: {HP}; ATK: {ATK}; DEF: {DEF}; Cost: {Cost}; Can dress: {CanDress}\n";
         }
 
-        public void Dress(Army army, int index, Unit armor)
+        public void Dress(List<Unit> units, int index, Unit armor)
         {
-            army.soldiers.RemoveAt(index);
-            army.soldiers.Insert(index, armor);
+            units.RemoveAt(index);
+            units.Insert(index, armor);
         }
 
         public LightInfantry(int hp, int atk, int def, int cost, int id, string armyName)
