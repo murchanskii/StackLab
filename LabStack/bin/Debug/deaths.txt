@@ -1,6 +1,3 @@
-(LightInfantry[3]) from (Army Moon) is dead
 (ProtectingWall[0]) from (Army Moon) is dead
-(Magician[1]) from (Army Moon) is dead
-(Magician[0]) from (Army Sun) is dead
-(Magician[1]) from (Army Sun) is dead
-(HeavyInfantry[2]) from (Army Moon) is dead
+(Archer[0]) from (Army Sun) is dead
+(LightInfantry[1]) from (Army Moon) is dead

@@ -64,7 +64,7 @@ namespace LabStack.ArmyFolder
                 if (cost >= Costs.Healer)
                 {
                     cost -= Costs.Healer;
-                    return new Healer(rnd, id, armyName);
+                    return new Proxy(new Healer(rnd, id, armyName));
                 }
             }
             else if (rnd_prcnt <= 1.18 && rnd_prcnt > 1)

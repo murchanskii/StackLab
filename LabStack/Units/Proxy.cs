@@ -9,37 +9,41 @@ namespace LabStack.Units
 {
     sealed class Proxy : Unit
     {
-        private Archer _archer;
+        public override int ATK  => _healer.ATK;
+        public override int HP { get => _healer.HP; set => _healer.HP = value; }
+        public override string ArmyName => _healer.ArmyName;
+        public override bool CanBeDressed => _healer.CanBeDressed;
+        public override bool CanDress => _healer.CanDress;
+        public override int Cost => _healer.Cost;
+        public override int DEF { get => _healer.DEF; set => _healer.DEF = value; }
+        public override int ID => _healer.ID;
+        public override bool IsHealable => _healer.IsHealable;
+        public override int MaxHP => _healer.MaxHP;
+
+        private Healer _healer;
         private static string _logFile = @"archer_log.txt";
         private StreamWriter sw;
 
-        public Proxy(Archer a, int id, string armyName)
+        public Proxy(Healer h)
         {
-            _archer = a;
-            MaxHP = HP = _archer.HP;
-            ATK = _archer.ATK;
-            DEF = _archer.DEF;
-            Cost = _archer.Cost;
-            ID = _archer.ID;
-            ArmyName = _archer.ArmyName;
+            _healer = h;
         }
 
         public override void TakeDamage(int damage)
         {
-            _archer.TakeDamage(damage);
+            base.TakeDamage(damage);
             if (damage < 0)
                 lock (sw = new StreamWriter(_logFile, true, Encoding.Default))
                 {
-                    sw.WriteLine($"({_archer.GetType().Name}[{ID}]) from ({ArmyName}) gains HP ::{-damage}::");
+                    sw.WriteLine($"({_healer.GetType().Name}[{ID}]) from ({ArmyName}) gains HP ::{-damage}::");
                     sw.Close();
                 }
             else
                 lock (sw = new StreamWriter(_logFile, true, Encoding.Default))
                 {
-                    sw.WriteLine($"({_archer.GetType().Name}[{ID}]) from ({ArmyName}) gets [{damage}] damage");
+                    sw.WriteLine($"({_healer.GetType().Name}[{ID}]) from ({ArmyName}) gets [{damage}] damage");
                     sw.Close();
                 }
-            
         }
 
         public override void ReportDeadUnit()
@@ -47,14 +51,14 @@ namespace LabStack.Units
             NotifyObservers(ID, ArmyName);
             lock (sw = new StreamWriter(_logFile, true, Encoding.Default))
             {
-                sw.WriteLine($"({_archer.GetType().Name}[{ID}]) from ({ArmyName}) is dead");
+                sw.WriteLine($"({_healer.GetType().Name}[{ID}]) from ({ArmyName}) is dead");
                 sw.Close();
             }
         }
 
         public override string ToString()
         {
-            return $" ({_archer.GetType().Name}[{ID}]): HP: {HP}; ATK: {ATK}; " +
+            return $" ({_healer.GetType().Name}[{ID}]): HP: {HP}; ATK: {ATK}; " +
                    $"DEF: {DEF}; Cost: {Cost};\n";
         }
     }

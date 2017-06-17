@@ -1,0 +1,2 @@
+(Healer[1]) from (Army Sun) gets [21] damage
+(Healer[1]) from (Army Sun) gets [19] damage
