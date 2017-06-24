@@ -47,7 +47,7 @@ namespace LabStack.Strategies
         {
             int force = CalcValue(healer.RangedAbility);
             int range = HomeTerritory(healer, index);
-            if (range < 0 || range >= army.soldiers.Count)
+            if ((range < 0 || range >= army.soldiers.Count) && !army.soldiers[range].IsHealable)
                 CommandHandler(new NoActionCommand(healer.GetType().Name, index, healer.ArmyName));
             else
                 CommandHandler(new HealCommand(healer, army.soldiers[range], force, healer.ArmyName));

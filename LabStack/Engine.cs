@@ -39,6 +39,7 @@ namespace LabStack
         public void CreateArmy()
         {
             _isDraw = false;
+            _winnerExists = false;
             _undoCommands = new Stack<ICommand>();
             _army1 = new Army("Army Sun", 200);
             Thread.Sleep(1000);
