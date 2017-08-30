@@ -24,7 +24,7 @@ There are two armies. They are represented by two lists. </br>
   + If unit is killed then it is deleted from the army at the exact same moment
   + The moves of Heavy Infantry are logged
   + Every death is logged
- * **The structure of patterns**
+* **The structure of patterns**
   + Singleton - game engine, menu for user.
   + Abstract factory - create units in an army
   + Prototype - clone units
