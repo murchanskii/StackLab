@@ -2,7 +2,7 @@
 
 * A project for university. It shows several patterns which will be described later.
 
-# Consept
+# Concept
 
 There are two armies. They are represented by two lists. </br>
 * **List of unit types:**
